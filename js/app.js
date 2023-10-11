@@ -449,3 +449,46 @@ function showCards(suits) {
   });
   $('#cards').html(html);
 }
+
+async function scan() {
+  let fileInput = document.getElementById('fileInput');
+  let imageFile = fileInput.files[0];
+
+  resizeImage(imageFile, 600, async function(resizedBlob) {
+      let formData = new FormData();
+      formData.append('image', resizedBlob);
+
+      let response = await fetch('http://localhost:8080/detect-text', {
+          method: 'POST',
+          body: formData
+      });
+
+      let result = await response.json();
+      window.location = "index.html?hand=" + result.join(",") + "+";
+  });
+}
+
+function resizeImage(file, maxWidth, callback) {
+  let reader = new FileReader();
+  reader.onload = function (event) {
+      let img = new Image();
+      img.onload = function () {
+          let canvas = document.createElement('canvas');
+          let ctx = canvas.getContext('2d');
+
+          // Scale the image
+          let scaleRatio = maxWidth / img.width;
+          canvas.width = maxWidth;
+          canvas.height = img.height * scaleRatio;
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          // Convert canvas to Blob
+          canvas.toBlob(function(blob) {
+              callback(blob);
+          });
+      }
+      img.src = event.target.result;
+  }
+  reader.readAsDataURL(file);
+}

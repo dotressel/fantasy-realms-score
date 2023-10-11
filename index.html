@@ -25,6 +25,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/jquery.i18n.properties.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
@@ -162,7 +163,9 @@
           <span id="cardCount">0</span><span class="separator">/</span><span id="cardLimit">7</span>
           <span id="points">000</span>
         </div>
-        <button id="clear" type="button" class="btn btn-success" onclick="reset()">Reset</button>
+        <input type="file" accept="image/*" capture="camera" id="fileInput" onchange="scan()">
+        <label for="fileInput" class="btn btn-success"><i class="fa fa-camera"></i></label>
+        <button id="clear" type="button" class="btn btn-danger" onclick="reset()"><i class="fa fa-trash"></i></button>
       </div>
     </header>
     <main>

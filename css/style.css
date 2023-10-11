@@ -58,6 +58,14 @@ header label {
   color: #ccc0a8;
 }
 
+header #fileInput {
+  display: none;
+}
+
+header .btn {
+  margin: 10px 5px;
+}
+
 main {
   padding-top: 4rem;
   min-height: 100%;
