@@ -85,7 +85,6 @@ function selectLanguage(lang) {
 }
 
 function updateLabels(lang) {
-  $('#clear').html(jQuery.i18n.prop('button.reset'));
   $('#lbl_ch_items').html(jQuery.i18n.prop('label.cursed-hoard.items'));
   $('#lbl_ch_suits').html(jQuery.i18n.prop('label.cursed-hoard.suits'));
   $('#sound-label').html(jQuery.i18n.prop('button.sound'));
@@ -454,6 +453,8 @@ async function scan() {
   let fileInput = document.getElementById('fileInput');
   let imageFile = fileInput.files[0];
 
+  if (!imageFile) return;
+
   resizeImage(imageFile, 600, async function(resizedBlob) {
       let formData = new FormData();
       formData.append('image', resizedBlob);
@@ -466,6 +467,8 @@ async function scan() {
       let result = await response.json();
       window.location = "index.html?hand=" + result.join(",") + "+";
   });
+
+  fileInput.text = '';
 }
 
 function resizeImage(file, maxWidth, callback) {
